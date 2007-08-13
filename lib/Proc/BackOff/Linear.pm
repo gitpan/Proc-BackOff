@@ -17,7 +17,7 @@ use strict;
 
 # CPAN & others
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -29,14 +29,15 @@ Usage:
 
  use Proc::BackOff::Linear;
 
- my $obj = Proc::BackOff::Linear->new( { $slope => 5, x => 'count', b => 0 );
- # sequence would be
+ my $obj = Proc::BackOff::Linear->new( { slope => 5, x => 'count', b => 0 );
+ # On N'th failure delay would be set to:
  # y = slope * x + b;
  # 1st failure  :  5 * count + b = 5 * 1 + 0 = 5
  # 2nd failure  :  5 * 2 + 0 = 10
- # 3nd failure  :  5 * 3 + 0 = 10
+ # 3rd failure  :  5 * 3 + 0 = 15
+ # 4th failure  :  5 * 4 + 0 = 20
 
-See L<BackOff> for further documentation.
+See L<Proc::BackOff> for further documentation.
 
 =head1 Overloaded Methods
 
@@ -44,9 +45,9 @@ See L<BackOff> for further documentation.
 
 Check for variables being set:
 
-Required: slope.
-B defaults to 0
-x defaults to 'count'
+Required: slope
+ b defaults to 0
+ x defaults to 'count'
 
 =cut
 
@@ -107,6 +108,9 @@ sub calculate_back_off {
 1;
 
 =head1 Changes
+
+ 0.02   2007-08-12 -- Daniel Lo
+        - Documentation fixes.  No code changes.
 
  0.01    2007-04-17 -- Daniel Lo
         - Initial Version

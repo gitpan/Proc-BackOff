@@ -23,7 +23,7 @@ use strict;
 
 # CPAN & others
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -38,18 +38,21 @@ Usage:
  my $obj = Proc::BackOff::Linear->new( { slope => 5 } );
 
  while ( 1 ) {
-     # delay will return 0 for no back off needed
-     # or the number of seconds until back off is completed.
- 	sleep $obj->delay() if $obj->delay();
- 	# or
- 	$obj->sleep();
+     # delay will return
+     #      0 : No delay needed.
+     #      N : or the number of seconds until back off is completed.
+
+     sleep $obj->delay() if $obj->delay();
+  	 # or
+  	 $obj->sleep();
 
      if ( do_attempt() ) {
          # success
-         $obj->success(); # passing success to BackOff will reset the BackOff
+         $obj->success(); # passing success to Proc::BackOff will reset
+                          # Proc::BackOff
      } else {
          # failure
-         $obj->failure(); # passing failure will instruct BackOff to
+         $obj->failure(); # passing failure will instruct Proc::BackOff to
                           # increment the time to back off
      }
 
@@ -61,7 +64,7 @@ Usage:
 
 =head1 DESCRIPTION
 
-Proc::BackOff is a generic module meant to be directly inherited from and then
+Proc::BackOff is a base module meant to be directly inherited from and then
 modified by overloading the calculate_back_off object method.
 
 Use: Proc::BackOff::Linear, Proc::BackOff::Random, or Proc::BackOff::Exponential.
@@ -70,9 +73,12 @@ Any success C<$obj-E<gt>success()> will result, in the back off being removed.
 
 =head1 METHODS
 
-=head2 new(%) {
+=head2 new()
 
-Do not call this function, Call the new from: L<Proc::BackOff::Linear>,
+This is for internal use only.
+
+Do not call this function, call new from:
+L<Proc::BackOff::Linear>,
 L<Proc::BackOff::Random>, or L<Proc::BackOff::Exponential>.
 
 =cut
@@ -123,8 +129,9 @@ sub delay {
 
 =head2 sleep()
 
-Simply calls:
-   sleep $self->delay() if $self->delay();
+This is a short cut for:
+
+    sleep $obj->delay() if $obj->delay();
 
 =cut
 
@@ -137,7 +144,7 @@ sub sleep {
 
 =head2 success()
 
-Success will clear any current BackOff settings.
+Success will clear Proc::BackOff delay.
 
 =cut
 
@@ -149,7 +156,7 @@ sub success {
 
 =head2 reset()
 
-Simply just resets $obj back to a state in which no BackOff exists.
+Simply just resets $obj back to a state in which no "backing off" exists.
 
 =cut
 
@@ -298,18 +305,25 @@ This is used internally by object method delay();
 
 =head1 Inheritance
 
-I've included an exponential, linear, and random back off.  You can use any of
+I have included an exponential, linear, and random back off.  You can use any of
 these sub classes to make a new back off library.  Please consider sending me
-the your library so that I may include it for others to use.
+any additional BackOff functions, so that I may include it for others to use.
 
 =head1 Notes
 
 Please send me any bugfixes or corrections.  Even spelling correctins :).
 
+Please file any bugs with:
+
+ L<http://rt.cpan.org/Public/Dist/Display.html?Name=Proc-BackOff>
+
 =head1 Changes
 
- 0.01    2007-04-17 -- Daniel Lo
-        - Initial Version
+ 0.02   2007-08-12 -- Daniel Lo
+        - Documentation fixes.  No code changes.
+
+ 0.01   2007-04-17 -- Daniel Lo
+        - Initial version
 
 =head1 AUTHOR
 

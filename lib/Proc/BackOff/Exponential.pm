@@ -33,20 +33,22 @@ Usage:
  use Proc::BackOff::Exponential;
 
  my $obj = Proc::BackOff::Exponential->new( { base => 2 , exponent=> 'count' } );
- # sequence would be
+ # On N'th failure delay would be set to:
  # 1st failure  :  2^1 = 2
  # 2nd failure  :  2^2 = 4
- # 3nd failure  :  2^3 = 8
+ # 3rd failure  :  2^3 = 8
+ # 4th failure  :  2^4 = 16
 
  # or
 
  my $obj = Proc::BackOff::Exponential->new( { base => 'count' , exponent=> 2 } );
- # sequence would be
+ # On N'th failure delay would be set to:
  # 1st failure  :  1^2 = 1
  # 2nd failure  :  2^2 = 4
- # 3nd failure  :  3^2 = 9
+ # 3rd failure  :  3^2 = 9
+ # 4th failure  :  4^2 = 16
 
-See L<BackOff> for further documentation.
+See L<Proc::BackOff> for further documentation.
 
 =head1 Overloaded Methods
 
@@ -103,7 +105,10 @@ sub calculate_back_off {
 
 =head1 Changes
 
- 0.01    2007-04-17 -- Daniel Lo
+ 0.02   2007-08-12 -- Daniel Lo
+        - Documentation fixes.  No code changes.
+
+ 0.01   2007-04-17 -- Daniel Lo
         - Initial Version
 
 =head1 AUTHOR

@@ -20,7 +20,7 @@ use strict;
 
 # CPAN & others
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -33,13 +33,13 @@ Usage:
  use Proc::BackOff::Random;
 
  my $obj = Proc::BackOff::Random->new( { min => 5 , max => 100 } );
- # sequence would be
+ # On N'th failure delay would be set to:
  # 1st failure  :  a random number between 5 and 100 inclusive.
  #                 (5 is a possible value)
- # 1st failure  :  a random number between 5 and 100 inclusive.
- # 1st failure  :  a random number between 5 and 100 inclusive.
+ # 2nd failure  :  a random number between 5 and 100 inclusive.
+ # 3rd failure  :  a random number between 5 and 100 inclusive.
 
-See L<BackOff> for further documentation.
+See L<Proc::BackOff> for further documentation.
 
 =head1 Overloaded Methods
 
@@ -98,7 +98,10 @@ sub calculate_back_off {
 
 =head1 Changes
 
- 0.01    2007-04-17 -- Daniel Lo
+ 0.02   2007-08-12 -- Daniel Lo
+        - Documentation fixes.  No code changes.
+
+ 0.01   2007-04-17 -- Daniel Lo
         - Initial Version
 
 =head1 AUTHOR
